@@ -59,4 +59,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: com.github.bittly
-          path: ${{ github.workspace }}/apk/*
+          path: ${{ github.workspace }}/dist_electron/*.blockmap
