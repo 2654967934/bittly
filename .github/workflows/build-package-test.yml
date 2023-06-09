@@ -54,19 +54,3 @@ jobs:
       # build
       - name: Build app package
         run: npm run electron:build -- --x64
-
-      # setup qshell
-      - name: Set up qshell
-        run: |
-          Invoke-RestMethod -Uri 'https://devtools.qiniu.com/qshell-v2.9.2-windows-386.zip' -OutFile 'qshell.zip'
-          Expand-Archive -LiteralPath qshell.zip -DestinationPath ./
-          ./qshell account ${{secrets.QINIU_AK}} ${{secrets.QINIU_SK}} ${{secrets.QINIU_ACCOUNT_NAME}}
-
-      # upload package
-      - name: Upload package
-        run: >
-          ./qshell rput ${{secrets.QINIU_BUCKET_TEST}} bittly/bittly-x64-$env:packey.exe 
-          ./dist_electron/bittly-$env:appver-win-x64.exe 
-        env:
-          appver: ${{steps.package-json.outputs.version}}
-          packey: ${{inputs.packey}}
